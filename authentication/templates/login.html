@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Вход в аккаунт {% endblock %}
+
+{% block content %}
+
+<div class="container auth-form mb-5">
+	<section class="vh-100">
+		<div class="container-fluid h-custom">
+		  <div class="row d-flex justify-content-center align-items-center h-100">
+			<div class="col-md-9 col-lg-6 col-xl-5">
+			  <img src="{% static 'images/login_logo.png' %}"
+				class="img-fluid" alt="CryptoChecker">
+			</div>
+			<div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+			  <form method="post" id="login-form">
+				{% csrf_token %}
+				<div class="divider d-flex align-items-center my-4">
+				  <p class="text-center fw-bold mx-3 mb-0">Авторизация</p>
+				</div>
+	  
+				<div class="form-outline mb-4">
+					<input placeholder="Введите свой логин" class="field form-control form-control-lg shadow-none" type="text" name="username" autocapitalize="none" maxlength="17" required id="id_username">
+				  <label class="form-label" for="id_username">Логин</label>
+				</div>
+	  
+				<div class="form-outline mb-3">
+					<input placeholder="Введите свой пароль" class="field form-control form-control-lg shadow-none" type="password" name="password" required id="id_password">
+				  <label class="form-label" for="id_password">Пароль</label>
+				</div>
+
+				{% if form.errors %}
+					<ul class="error-list">
+						<li>Имя пользователя или пароль неверны</li>
+					</ul>
+				{% endif %}
+	  			<div class="text-center text-lg-start mt-4 pt-2">
+					<p style="color: #d3d3d5">Еще нет аккаунта? <a href="{% url 'registration' %}">Создать -></a></p>
+				  <input type="submit" class="btn btn-lg shadow-none btn-login" style="padding-left: 2.5rem; padding-right: 2.5rem;" name="login" value="Войти">
+				</div>
+			  </form>
+			</div>
+		  </div>
+		</div>
+	  </section>	
+</div>
+
+{% endblock %}

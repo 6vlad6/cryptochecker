@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} CryptoChecker - Избранное {% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row text-center card-group">
+
+          {% if request.user.is_authenticated %}
+
+              <div class="btn-group mb-3" role="group">
+                  <a type="button" id="projects-btn" class="btn btn-outline pressed-btn">Проекты</a>
+                  <a type="button" id="developers-btn" class="btn btn-outline">Разработчики</a>
+              </div>
+
+              {% for project in projects %}
+              <a class="col-xl-3 col-sm-6 mb-5 project" href="{% url 'project' project.id %}">
+                  <div class="rounded shadow-lg py-5 px-4 developer-block">
+                      {% if project.img %}
+                          <img src="{{project.img.url}}" class="img-fluid rounded-circle mb-3 shadow-sm" style="height: 80px;"/>
+                      {% endif %}
+                      <div class="card-footer">
+                          <h5 class="developer-title">{{project.title}}</h5>
+                          <small>{{project.ticker}}</small>
+                      </div>
+                  </div>
+              </a>
+              {% endfor %}
+
+
+              {% for developer in developers %}
+              <a class="col-xl-3 col-sm-6 mb-5 developer" href="{% url 'developer' developer.id %}" style="display: none">
+                  <div class="rounded shadow-lg py-5 px-4 developer-block">
+                      {% if developer.img %}
+                          <img src="{{developer.img.url}}" class="img-fluid rounded-circle mb-3 shadow-sm" style="height: 80px;"/>
+                      {% endif %}
+                      <div class="card-footer">
+                          <h5 class="developer-title">{{developer.title}}</h5>
+                      </div>
+                  </div>
+              </a>
+              {% endfor %}
+        {% else %}
+            <div class="">
+                <img src="{% static 'images/login_logo.png' %}" style="height: 500px" class="img-fluid" alt="CryptoChecker">
+                <h2><span style="color: #d3d3d5">Вам нужно <span class="dev-title"><a href="{% url 'registration' %}">войти в аккаунт</a></span>, чтобы добавлять в Избранное</span></h2>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

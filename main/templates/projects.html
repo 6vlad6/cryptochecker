@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} CryptoChecker - Проекты {% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row text-center card-group">
+        {% for project in projects %}
+        <a class="col-xl-3 col-sm-6 mb-5" href="{% url 'project' project.id %}">
+            <div class="rounded shadow-lg py-5 px-4 developer-block">
+                {% if project.img %}
+                    <img src="{{project.img.url}}" class="img-fluid rounded-circle mb-3 shadow-sm" style="height: 80px;"/>
+                {% endif %}
+                <div class="card-footer">
+                    <h5 class="developer-title">{{project.title}}</h5>
+                    <small>{{project.ticker}}</small>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

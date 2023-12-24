@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} CryptoChecker - Главная {% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="row text-center">
+        {% if request.user.is_authenticated %}
+            <div class="table-responsive">
+                <table class="table table-borderless">
+                  <thead>
+                    <tr>
+                      <th scope="col">Токен</th>
+                      <th scope="col">Кол-во</th>
+                      <th scope="col">Ср. цена</th>
+                      <th scope="col">Цена</th>
+                      <th scope="col">Изменение, %</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for item in balance %}
+                        <tr class="tr">
+                          <td scope="row">{{item.ticker}}</td>
+                          <td>{{item.qnt}}</td>
+                          <td>{{item.avg_price}}$</td>
+                          <td>{{item.price}}$</td>
+                          <td>
+
+                              {% if item.price_change >= 0 %}
+                                <span style="color: green">{{item.price_change}}</span>
+                              {% else %}
+                                <span style="color: red">{{item.price_change}}</span>
+                              {% endif %}
+                          </td>
+                        </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="">
+                <img src="{% static 'images/login_logo.png' %}" style="height: 500px" class="img-fluid" alt="CryptoChecker">
+                <h1><span style="color: #d3d3d5">CryptoChecker - это криптовалютный онлайн-портфель без чего-либо лишнего. Просто и удобно!</span></h1>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

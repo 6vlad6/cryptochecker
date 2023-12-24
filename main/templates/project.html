@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} CryptoChecker - {{project.title}} {% endblock %}
+
+{% block content %}
+<div class="container" style="background: none">
+    <div class="main-body">
+
+          <div class="row gutters-sm">
+                <div class="col-md-4 mb-3">
+                    <div class="dev">
+                        <div class="dev-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                {% if project.img %}
+                                    <img src="{{project.img.url}}" class="rounded-circle" width="150">
+                                {% endif %}
+                                <div class="mt-3">
+                                    <h4 class="dev-title">{{project.title}}</h4>
+
+                                    {% for tag in tags %}
+                                        <p class="mb-1 dev-text">{{tag}}</p>
+                                    {% endfor %}
+
+                                {% if request.user.is_authenticated %}
+                                    {% if is_saved %}
+                                        <a href="{% url 'remove-project' project.id %}" class="btn btn-outline">Удалить из избранного</a>
+                                    {% else %}
+                                        <a href="{% url 'save-project' project.id %}" class="btn btn-outline mb-1">Добавить в избранное</a>
+                                    {% endif %}
+                                {% endif %}
+
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="dev mb-3">
+                    <div class="dev-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0 dev-text">О проекте: </h6>
+                            </div>
+
+                            <div class="col-sm-9">
+                                {% if project.description %}
+                                    <p class="dev-title">{{project.description}}</p>
+                                {% else %}
+                                    <p class="dev-title">пока нет информации</p>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-sm-3">
+                                <h6 class="mb-0 dev-text">Тикер: </h6>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="dev-title">{{project.ticker}}</p>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <h6 class="mb-0 dev-text">Разработчик: </h6>
+                            </div>
+                            <div class="col-sm-9">
+                                <a href="{% url 'developer' project.developer.id %}" class="dev-title">{{project.developer}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+          </div>
+
+        </div>
+    </div>
+{% endblock %}

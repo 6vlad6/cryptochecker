@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} CryptoChecker - Транзакции {% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="row text-center">
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'add-transaction' %}" class="btn btn-outline mb-3">Добавить транзакцию</a>
+
+            <div class="table-responsive">
+                <table class="table table-borderless">
+                  <thead>
+                    <tr>
+                      <th scope="col">Токен</th>
+                      <th scope="col">Кол-во</th>
+                      <th scope="col">Цена</th>
+                      <th scope="col">Дата</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for transaction in transactions %}
+                        <tr class="tr">
+                          <td scope="row">{{transaction.token.ticker}}</td>
+                          {% if transaction.reason == 'Покупка' %}
+                                <td style="color: green">+{{transaction.qnt}}</td>
+                          {% else %}
+                                <td style="color: red">-{{transaction.qnt}}</td>
+                          {% endif %}
+                          <td>{{transaction.price}}$</td>
+                          <td>{{transaction.date}}</td>
+                          <td><a href="{% url 'delete-transaction' transaction.id %}"><i class="material-icons mr-2 i-icon">delete</i></a></td>
+                        </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="">
+                <img src="{% static 'images/login_logo.png' %}" style="height: 500px" class="img-fluid" alt="CryptoChecker">
+                <h2><span style="color: #d3d3d5">Вам нужно <span class="dev-title"><a href="{% url 'registration' %}">войти в аккаунт</a></span>, чтобы просматривать транзакции</span></h2>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

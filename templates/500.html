@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Ошибка 500 {% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-center">
+    <div class="text-center row">
+        <div class=" col-md-6">
+            <img src="{% static 'images/login_logo.png' %}" width="250" alt="404"
+                class="img-fluid">
+        </div>
+        <div class=" col-md-6 mt-5 mb-5">
+            <p class="fs-3" style="font-weight: 700;"> <span class="text-danger">Упс!</span> Ошибка на сервере или неверный запрос</p>
+            <p class="lead" style="font-weight: 600;">
+                Проверьте Ваш запрос или чуть-чуть подождите. 
+            </p>
+            <a href="{% url 'home' %}" class="btn btn-lg"><i class="cart-icon material-icons">home</i> На главную</a>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

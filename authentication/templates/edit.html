@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Редактирование профиля {% endblock %}
+
+{% block content %}
+<div class="container edit-form">
+    <h1>Редактирование профиля</h1>
+  	<hr style="color: #d3d3d5">
+	<div class="row">
+      <div class="col-md-3">
+		<form method="post" enctype="multipart/form-data" id="customuser_form">
+			{% csrf_token %}
+			<div class="text-center image">
+				{% if request.user.img %}
+					  <img src="{{request.user.img.url}}" class="rounded-circle" height="170" width="170" alt="img">
+				{% else %}
+					<img src="{% static 'images/default-photo.jpg' %}" class="rounded-circle" height="170" width="170" alt="img">
+				{% endif %}
+			  	<h6>Загрузить новое фото</h6>
+			  
+			  	<input type="file" name="img" accept="image/*" id="id_img" class="field form-control shadow-none">
+			  	{% if form.errors.img %}
+					<ul class="error-list">
+						{{form.errors.img}}
+					</ul>
+				{% endif %}
+			</div>
+		</div>
+      
+      <div class="col-md-9">
+        <div class="alert alert-warning alert-dismissable mt-3">
+          <i class="text-center cart-icon material-icons">settings</i>
+          Поменять пароль можно по <a href="{% url 'change-password' %}"><strong>ссылке</strong></a>.
+        </div>
+        <h3>Личная информация</h3>
+		  <div class="form-group">
+            <label class="col-md-3 control-label">Имя пользователя:</label>
+            <div class="col-md-8">
+				<input class="field form-control shadow-none" type="text" name="username" maxlength="17" required id="id_username" value="{{request.user.username}}">
+				{% if form.errors.username %}
+					<ul class="error-list">
+						{{form.errors.username}}
+					</ul>
+				{% endif %}
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-8 mb-3">
+				<input type="submit" class="btn btn-default shadow-none" name="_save" value="Сохранить изменения">
+              <span></span>
+              <input type="reset" class="btn btn-default shadow-none" value="Отмена">
+            </div>
+			<a href="{% url 'logout' %}" class="btn shadow-none">Выйти из аккаунта</a>
+          </div>
+        </form>
+      </div>
+  </div>
+</div>
+
+{% endblock %}

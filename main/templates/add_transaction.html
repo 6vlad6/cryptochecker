@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} CryptoChecker - Добавить транзакцию {% endblock %}
+
+{% block content %}
+
+<div class="container auth-form mb-5">
+	{% if request.user.is_authenticated %}
+		<section class="vh-100">
+			<div class="container-fluid h-custom">
+			  <div class="row d-flex justify-content-center align-items-center h-100">
+				<div class="col-md-9 col-lg-6 col-xl-5">
+				  <img src="{% static 'images/login_logo.png' %}"
+					class="img-fluid" alt="CryptoChecker">
+				</div>
+				<div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+				  <form method="post" id="transaction_form">
+					{% csrf_token %}
+					<div class="divider d-flex align-items-center my-4">
+					  <p class="text-center fw-bold mx-3 mb-0">Добавление транзакции</p>
+					</div>
+
+					<div class="form-outline mb-4">
+						<select name="token" required id="id_token" class="form-select form-select-sm">
+							{% for token in tokens %}
+								<option value="{{token.id}}">{{token.ticker}}</option>
+							{% endfor %}
+						</select>
+					  <label class="form-label" for="id_token">Токен</label>
+					</div>
+
+					<div class="form-outline mb-3">
+						<input class="field form-control form-control-lg shadow-none" name="qnt" required id="id_qnt">
+					  <label class="form-label" for="id_qnt">Количество</label>
+					</div>
+
+					<div class="form-outline mb-3">
+						<input class="field form-control form-control-lg shadow-none" name="price" required id="id_price">
+					  <label class="form-label" for="id_price">Цена</label>
+					</div>
+
+					<div class="form-outline mb-3">
+						<select name="reason" required id="id_reason" class="form-select form-select-sm">
+							{% for reason in reasons %}
+								<option value="{{reason}}">{{reason}}</option>
+							{% endfor %}
+						</select>
+						<label class="form-label" for="id_reason">Тип транзакции</label>
+					</div>
+
+					<div class="text-center text-lg-start mt-4 pt-2">
+					  <input type="submit" class="btn btn-lg shadow-none btn-login" style="padding-left: 2.5rem; padding-right: 2.5rem;" name="_save" value="Добавить">
+					</div>
+				  </form>
+				</div>
+			  </div>
+			</div>
+		</section>
+	{% else %}
+		<div class="container">
+			<div class="row text-center">
+				<div>
+					<img src="{% static 'images/login_logo.png' %}" style="height: 500px" class="img-fluid" alt="CryptoChecker">
+					<h2><span style="color: #d3d3d5">Вам нужно <span class="dev-title"><a href="{% url 'registration' %}">войти в аккаунт</a></span>, чтобы добавлять транзакции</span></h2>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+</div>
+
+{% endblock %}

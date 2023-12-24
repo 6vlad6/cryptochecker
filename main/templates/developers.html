@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} CryptoChecker - Разработчики {% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row text-center card-group">
+        {% for developer in developers %}
+        <a class="col-xl-3 col-sm-6 mb-5" href="{% url 'developer' developer.id %}">
+            <div class="rounded shadow-lg py-5 px-4 developer-block">
+                {% if developer.img %}
+                    <img src="{{developer.img.url}}" class="img-fluid rounded-circle mb-3 shadow-sm" style="height: 80px;"/>
+                {% endif %}
+                <div class="card-footer">
+                    <h5 class="developer-title">{{developer.title}}</h5>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
